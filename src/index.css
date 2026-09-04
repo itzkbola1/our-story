@@ -1,0 +1,56 @@
+:root {
+  --bg: #14101f;
+  --bg-raised: #1c1730;
+  --ink: #f2ede2;
+  --ink-dim: #b3a9c9;
+  --gold: #dba85a;
+  --gold-soft: rgba(219, 168, 90, 0.18);
+  --rule: rgba(242, 237, 226, 0.14);
+
+  --display: "Fraunces", Georgia, serif;
+  --body: "Karla", -apple-system, sans-serif;
+
+  color-scheme: dark;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--body);
+  -webkit-font-smoothing: antialiased;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+button {
+  font-family: inherit;
+  cursor: pointer;
+}
+
+a {
+  color: inherit;
+}
+
+::selection {
+  background: var(--gold-soft);
+  color: var(--ink);
+}
+
+:focus-visible {
+  outline: 2px solid var(--gold);
+  outline-offset: 3px;
+}
