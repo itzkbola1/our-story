@@ -44,8 +44,9 @@ export const chapters = [
   },
  {
   date: "Somewhere in the middle",
-  title: "A memory that's just ours",
-  text: "The first you visited and had the priviledge to be with you.",
+  title:"A memory that's just ours",
+  text: "The first time you travelled to stay with me.",
+  text: "Having you beside me every day, waking up next to you, laughing, disturbing each other and simply getting to experience life together gave me memories I’ll always hold close.",
   photo: middlePhoto,
 },
 {
