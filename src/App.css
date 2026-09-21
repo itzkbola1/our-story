@@ -579,3 +579,93 @@
   .nav-btn { padding: 9px 14px; font-size: 0.8rem; }
   .nav-label { display: none; }
 }
+
+/* ───────────── Birthday letter fix ───────────── */
+
+.birthday-inner {
+  min-height: 0;
+  overflow: hidden;
+}
+
+.birthday-scroll {
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+
+  overflow-y: auto !important;
+  overflow-x: hidden;
+
+  -webkit-overflow-scrolling: touch;
+
+  /* Important: long content starts from the TOP */
+  justify-content: flex-start !important;
+  align-items: stretch;
+
+  scroll-behavior: auto;
+  overscroll-behavior: contain;
+
+  padding-bottom: 120px;
+}
+
+.birthday-letter {
+  width: 100%;
+  max-width: 850px;
+  margin: 0 auto;
+
+  /* Never vertically center a long letter */
+  flex: 0 0 auto;
+
+  padding-top: 10px;
+  padding-bottom: 80px;
+}
+
+.birthday-heading {
+  margin-top: 0;
+  margin-bottom: 32px;
+}
+
+.birthday-letter-body {
+  width: 100%;
+}
+
+.birthday-letter .letter-paragraph {
+  height: auto !important;
+  max-height: none !important;
+  overflow: visible !important;
+
+  margin-bottom: 24px;
+
+  line-height: 1.75;
+}
+
+.birthday-ending {
+  text-align: center;
+  font-size: 2rem;
+  margin: 50px 0;
+}
+
+/* Mobile */
+@media (max-width: 600px) {
+  .birthday-scroll {
+    padding-left: 22px;
+    padding-right: 22px;
+    padding-bottom: 130px;
+  }
+
+  .birthday-letter {
+    max-width: 100%;
+    padding-top: 5px;
+  }
+
+  .birthday-heading {
+    font-size: clamp(2.2rem, 10vw, 3.5rem);
+    line-height: 1.05;
+    margin-bottom: 28px;
+  }
+
+  .birthday-letter .letter-paragraph {
+    font-size: 1rem;
+    line-height: 1.75;
+    margin-bottom: 22px;
+  }
+}

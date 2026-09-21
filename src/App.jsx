@@ -320,48 +320,118 @@ function BirthdayPage() {
   const target = useMemo(() => new Date(her.birthday).getTime(), []);
   const remaining = useCountdown(target);
   const unlocked = remaining <= 0;
+  const [revealed, setRevealed] = useState(false);
+
+  // Reference to the birthday scroll container
+  const birthdayScrollRef = useRef(null);
 
   const days = Math.max(0, Math.floor(remaining / 86400000));
   const hours = Math.max(0, Math.floor((remaining / 3600000) % 24));
   const minutes = Math.max(0, Math.floor((remaining / 60000) % 60));
   const seconds = Math.max(0, Math.floor((remaining / 1000) % 60));
 
+  const revealBirthdayMessage = () => {
+    setRevealed(true);
+  };
+
+  // Whenever the birthday letter opens, force it back to the beginning
+  useEffect(() => {
+    if (!revealed) return;
+
+    const scrollToTop = () => {
+      if (birthdayScrollRef.current) {
+        birthdayScrollRef.current.scrollTop = 0;
+        birthdayScrollRef.current.scrollTo({
+          top: 0,
+          left: 0,
+          behavior: "instant",
+        });
+      }
+
+      window.scrollTo(0, 0);
+    };
+
+    // Wait until React has rendered the full letter
+    requestAnimationFrame(() => {
+      requestAnimationFrame(scrollToTop);
+    });
+  }, [revealed]);
+
   return (
     <div className="page-inner birthday-inner">
       <Stars count={40} />
-      <div className="page-scroll birthday-content">
+
+      <div
+        ref={birthdayScrollRef}
+        className="page-scroll birthday-content birthday-scroll"
+      >
         {!unlocked ? (
           <>
-            <p className="eyebrow">{birthdaySurprise.countdownLabel}</p>
+            <p className="eyebrow">
+              {birthdaySurprise.countdownLabel}
+            </p>
+
             <div className="countdown">
               <div>
                 <span>{days}</span>
                 <small>days</small>
               </div>
+
               <div>
                 <span>{String(hours).padStart(2, "0")}</span>
                 <small>hrs</small>
               </div>
+
               <div>
                 <span>{String(minutes).padStart(2, "0")}</span>
                 <small>min</small>
               </div>
+
               <div>
                 <span>{String(seconds).padStart(2, "0")}</span>
                 <small>sec</small>
               </div>
             </div>
-            <p className="birthday-locked">{birthdaySurprise.lockedMessage}</p>
+
+            <p className="birthday-locked">
+              {birthdaySurprise.lockedMessage}
+            </p>
           </>
+        ) : !revealed ? (
+          <div className="birthday-ready">
+            <h2 className="display-xl">
+              {birthdaySurprise.readyMessage}
+            </h2>
+
+            <button
+              className="btn-primary"
+              onClick={revealBirthdayMessage}
+            >
+              {birthdaySurprise.readyCta}
+            </button>
+          </div>
         ) : (
-          <>
-            <h2 className="display-xl">{birthdaySurprise.unlockedHeading}</h2>
-            {birthdaySurprise.unlockedParagraphs.map((p, i) => (
-              <p key={i} className="letter-paragraph">
-                {p}
-              </p>
-            ))}
-          </>
+          <div className="birthday-letter">
+            <h2 className="display-xl birthday-heading">
+              {birthdaySurprise.unlockedHeading}
+            </h2>
+
+            <div className="birthday-letter-body">
+              {birthdaySurprise.unlockedParagraphs.map((p, i) => (
+                <p
+                  key={i}
+                  className="letter-paragraph"
+                  style={{
+                    animationDelay: `${Math.min(i * 90, 1800)}ms`,
+                  }}
+                >
+                  {p}
+                </p>
+              ))}
+            </div>
+
+            <p className="birthday-ending">♡</p>
+          </div>
         )}
       </div>
     </div>
